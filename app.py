@@ -170,6 +170,8 @@ with st.sidebar:
             "🎯 Strategy Formulation",
             "📋 Investment Planning",
             "👥 Demographics Analysis",
+            "🤖 AI Policy Recommendations",     
+            "📊 AI Report Generator" 
             "📚 Data Sources"
         ],
         index=0
@@ -1953,4 +1955,164 @@ st.markdown("""
     <p style="margin: 0;">Built to support India's journey towards Universal Health Coverage by 2030</p>
 </div>
 """, unsafe_allow_html=True)
+elif page == "🤖 AI Policy Recommendations":
+    from utils.ai_helper_gemini import AIHealthcareAnalyst
+    
+    st.header("🤖 AI-Powered Policy Recommendations")
+    st.markdown("Get AI-generated strategic policy recommendations based on your scenario analysis.")
+    st.divider()
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        scenario_type = st.selectbox(
+            "Select Strategy Type",
+            [
+                "Conservative (50% by 2035)",
+                "Moderate (75% by 2035)",
+                "Aggressive (100% by 2035)",
+                "Quick Win (50% by 2030)"
+            ]
+        )
+    
+    with col2:
+        custom_timeline = st.number_input(
+            "Timeline (years)",
+            min_value=5,
+            max_value=20,
+            value=10
+        )
+    
+    st.divider()
+    
+    if st.button("🚀 Generate AI Policy Recommendations", key="policy_btn"):
+        with st.spinner("🤖 AI consultant analyzing scenario..."):
+            try:
+                analyst = AIHealthcareAnalyst()
+                
+                scenario_data = {
+                    "total_gap": 6_500_000,
+                    "years": custom_timeline,
+                    "strategy_type": scenario_type,
+                    "budget": 150_000,
+                    "gap_closure_pct": 50 if "50%" in scenario_type else 75 if "75%" in scenario_type else 100
+                }
+                
+                category_summary = {
+                    "Nurses & Midwives": {
+                        "gap": 2_860_000,
+                        "gap_percentage": 44.0,
+                        "avg_salary_inr": 420_000
+                    },
+                    "Lab Technicians": {
+                        "gap": 750_000,
+                        "gap_percentage": 11.5,
+                        "avg_salary_inr": 360_000
+                    },
+                    "Community Health Workers": {
+                        "gap": 880_000,
+                        "gap_percentage": 13.5,
+                        "avg_salary_inr": 240_000
+                    }
+                }
+                
+                recommendations = analyst.get_policy_recommendations(scenario_data, category_summary)
+                
+                st.success("✅ AI Analysis Complete!")
+                st.markdown(recommendations)
+                
+                st.download_button(
+                    label="📥 Download Recommendations",
+                    data=recommendations,
+                    file_name=f"AI_Recommendations_{scenario_type}.txt",
+                    mime="text/plain"
+                )
+                
+            except Exception as e:
+                st.error(f"❌ Error: {str(e)}")
+                st.info("Make sure GOOGLE_API_KEY is set in Streamlit Cloud secrets.")
+
+
+elif page == "📊 AI Report Generator":
+    from utils.ai_helper_gemini import AIHealthcareAnalyst
+    
+    st.header("📊 AI Report Generator")
+    st.markdown("Generate professional reports for different audiences.")
+    st.divider()
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        report_type = st.selectbox(
+            "Select Report Type",
+            [
+                "executive - Executive Summary",
+                "policy_brief - Policy Brief",
+                "implementation - Implementation Roadmap"
+            ],
+            format_func=lambda x: x.split(" - ")[1]
+        )
+        report_type = report_type.split(" - ")[0]
+    
+    with col2:
+        scenario_for_report = st.selectbox(
+            "Select Scenario",
+            [
+                "Conservative (50% by 2035)",
+                "Moderate (75% by 2035)",
+                "Aggressive (100% by 2035)",
+                "Quick Win (50% by 2030)"
+            ]
+        )
+    
+    st.divider()
+    
+    if st.button("📄 Generate Report", key="report_btn"):
+        with st.spinner("📝 AI generating report..."):
+            try:
+                analyst = AIHealthcareAnalyst()
+                
+                scenario_data = {
+                    "years": 10,
+                    "strategy_type": scenario_for_report,
+                    "budget": 150_000
+                }
+                
+                results_data = {
+                    "current_supply": 2_120_000,
+                    "required_supply": 8_600_000,
+                    "gap": 6_500_000,
+                    "gap_pct": 95,
+                    "annual_salary": 450_000,
+                    "training_cost": 125_000,
+                    "total_cost": 575_000,
+                    "professionals_added": 325_000
+                }
+                
+                report = analyst.generate_executive_report(
+                    scenario_data,
+                    results_data,
+                    report_type
+                )
+                
+                st.success("✅ Report Generated!")
+                st.markdown(report)
+                
+                report_name = {
+                    "executive": "Executive_Summary",
+                    "policy_brief": "Policy_Brief",
+                    "implementation": "Implementation_Roadmap"
+                }.get(report_type, "Report")
+                
+                st.download_button(
+                    label="📥 Download Report",
+                    data=report,
+                    file_name=f"AHP_{report_name}_{scenario_for_report}.txt",
+                    mime="text/plain"
+                )
+                
+            except Exception as e:
+                st.error(f"❌ Error: {str(e)}")
+                st.info("Make sure GOOGLE_API_KEY is set in Streamlit Cloud secrets.")
+
 
