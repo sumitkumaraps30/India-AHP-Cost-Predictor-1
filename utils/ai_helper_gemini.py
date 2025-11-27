@@ -12,8 +12,8 @@ class AIHealthcareAnalyst:
             raise ValueError("GOOGLE_API_KEY not found in environment variables")
         
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-pro')
-    
+        self.model = genai.GenerativeModel('gemini-1.5-flash')
+
     def get_policy_recommendations(self, scenario_data, category_data):
         """Generate AI-powered policy recommendations"""
         
