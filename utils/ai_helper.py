@@ -15,9 +15,7 @@ class AIHealthcareAnalyst:
         self.model = genai.GenerativeModel('gemini-pro')
     
     def get_policy_recommendations(self, scenario_data, category_data):
-        """
-        Generate AI-powered policy recommendations (FREE using Google Gemini)
-        """
+        """Generate AI-powered policy recommendations"""
         
         category_summary = "\n".join([
             f"- {cat}: {info['gap']:,} gap, {info['gap_percentage']}% of total, "
@@ -72,20 +70,16 @@ class AIHealthcareAnalyst:
            - Monitoring framework
         
         Format your response clearly with bold headers and bullet points.
-        Make recommendations specific, actionable, and tied to the data.
         """
         
         try:
             response = self.model.generate_content(prompt)
             return response.text
-            
         except Exception as e:
             return f"Error generating recommendations: {str(e)}"
     
     def generate_executive_report(self, scenario_data, results_data, report_type="executive"):
-        """
-        Generate comprehensive AI reports (FREE using Google Gemini)
-        """
+        """Generate comprehensive AI reports"""
         
         if report_type == "executive":
             prompt = f"""
@@ -105,105 +99,57 @@ class AIHealthcareAnalyst:
             
             Create a 1-page executive summary with these sections:
             
-            1. SITUATION (2-3 lines) - The current AHP crisis in India
-            2. OPPORTUNITY (2-3 lines) - Why this matters for UHC
-            3. RECOMMENDED STRATEGY (3 bullet points)
-            4. KEY METRICS (3-4 metrics showing impact)
-            5. INVESTMENT REQUIRED (Cost breakdown)
-            6. EXPECTED OUTCOMES (By year end)
-            7. NEXT STEPS (3 immediate actions)
+            1. SITUATION (2-3 lines)
+            2. OPPORTUNITY (2-3 lines)
+            3. RECOMMENDED STRATEGY (3 bullets)
+            4. KEY METRICS (3-4 metrics)
+            5. INVESTMENT REQUIRED
+            6. EXPECTED OUTCOMES
+            7. NEXT STEPS (3 actions)
             
-            Format with clear sections, bold headers, and professional language suitable 
-            for board presentations.
+            Use professional language suitable for board presentations.
             """
         
         elif report_type == "policy_brief":
             prompt = f"""
-            You are a health policy expert. Create a POLICY BRIEF for government health departments 
-            and international organizations.
+            You are a health policy expert. Create a POLICY BRIEF for government agencies.
             
             ANALYSIS RESULTS:
-            - AHP Gap: {results_data.get('gap', 'N/A'):,} professionals (95% of WHO benchmark)
+            - AHP Gap: {results_data.get('gap', 'N/A'):,} (95% of WHO benchmark)
             - Geographic Focus: 75% gap in rural areas
             - Category Priority: Nurses & Midwives = 44% of gap
-            - Timeline to Close: {scenario_data.get('years', 'N/A')} years
+            - Timeline: {scenario_data.get('years', 'N/A')} years
             - Total Investment: ₹{results_data.get('total_cost', 'N/A')} crore
-            - Population Impacted: 1.4 billion people
             
-            Create a policy brief with:
-            
-            1. EXECUTIVE SUMMARY (1 paragraph)
-            2. PROBLEM STATEMENT (2 paragraphs)
-               - AHP shortage scale and scope
-               - Impact on UHC and health outcomes
-            3. POLICY RECOMMENDATIONS (4-5 specific recommendations)
-               - Training capacity expansion
-               - Rural incentive mechanisms
-               - Regulatory framework
-               - Funding mechanisms
-            4. IMPLEMENTATION FRAMEWORK (Phase-wise approach)
-               - Phase 1: Foundation (Year 1-2)
-               - Phase 2: Scaling (Year 3-5)
-               - Phase 3: Consolidation (Year 6+)
-            5. FINANCIAL REQUIREMENTS (Budget breakdown)
-            6. SUCCESS INDICATORS (3-4 KPIs)
-            7. CONCLUSION (Impact on Universal Health Coverage)
-            
-            Make it suitable for government circulation and international health agencies.
+            Create policy brief with:
+            1. EXECUTIVE SUMMARY
+            2. PROBLEM STATEMENT
+            3. POLICY RECOMMENDATIONS (4-5 specific)
+            4. IMPLEMENTATION FRAMEWORK (Phase-wise)
+            5. FINANCIAL REQUIREMENTS
+            6. SUCCESS INDICATORS
+            7. CONCLUSION
             """
         
         elif report_type == "implementation":
             prompt = f"""
-            You are a healthcare operations consultant. Create an IMPLEMENTATION ROADMAP 
-            for healthcare organizations and government agencies.
+            Create an IMPLEMENTATION ROADMAP for healthcare organizations.
             
-            SCENARIO:
-            - Gap: {results_data.get('gap', 'N/A'):,} professionals
-            - Timeline: {scenario_data.get('years', 'N/A')} years
-            - Annual Budget: ₹{results_data.get('annual_salary', 'N/A')} crore
-            - Target Regions: Pan-India with rural focus
+            Gap: {results_data.get('gap', 'N/A'):,} professionals
+            Timeline: {scenario_data.get('years', 'N/A')} years
+            Budget: ₹{results_data.get('annual_salary', 'N/A')} crore
             
-            Create a detailed implementation roadmap with:
-            
+            Include:
             1. PRE-IMPLEMENTATION (Months 1-3)
-               - Assessment and planning
-               - Stakeholder engagement
-               - Infrastructure readiness
-            
             2. PHASE 1: FOUNDATION (Months 4-12)
-               - Quick wins and pilots
-               - Training capacity setup
-               - Initial hiring targets
-               - Success metrics
-            
             3. PHASE 2: SCALING (Year 2-3)
-               - Capacity expansion
-               - Geographic rollout
-               - Retention programs
-               - Performance targets
-            
             4. PHASE 3: OPTIMIZATION (Year 4+)
-               - Efficiency improvements
-               - Sustainability measures
-               - Impact assessment
-               - Course corrections
-            
             5. RISKS & MITIGATION
-               - Key implementation risks
-               - Contingency plans
-               - Escalation paths
-            
             6. SUCCESS CRITERIA
-               - Quantitative metrics
-               - Qualitative indicators
-               - Monitoring framework
-            
-            Make it actionable with specific timelines, budgets, and responsible parties.
             """
         
         try:
             response = self.model.generate_content(prompt)
             return response.text
-            
         except Exception as e:
             return f"Error generating report: {str(e)}"
