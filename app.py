@@ -170,7 +170,7 @@ with st.sidebar:
             "📋 Investment Planning",
             "👥 Demographics Analysis",
             "🤖 AI Policy Recommendations",     
-            "📊 AI Report Generator" 
+            "📋 AI Report Generator" 
             "📚 Data Sources"
         ],
         index=0
@@ -2034,10 +2034,10 @@ if page == "🤖 AI Policy Recommendations":
                 st.info("Make sure GOOGLE_API_KEY is set in Streamlit Cloud secrets.")
 
 
-if page == "📊 AI Report Generator":
+if page == "📋 AI Report Generator":
     from utils.ai_helper_gemini import AIHealthcareAnalyst
     
-    st.header("📊 AI Report Generator")
+    st.header("📋 AI Report Generator")
     st.markdown("Generate professional reports for different audiences.")
     st.divider()
     
@@ -2115,6 +2115,7 @@ if page == "📊 AI Report Generator":
             except Exception as e:
                 st.error(f"❌ Error: {str(e)}")
                 st.info("Make sure GOOGLE_API_KEY is set in Streamlit Cloud secrets.")
+
 
 
 
