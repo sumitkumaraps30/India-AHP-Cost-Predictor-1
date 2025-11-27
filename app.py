@@ -1957,7 +1957,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-elif page == "🤖 AI Policy Recommendations":
+if page == "🤖 AI Policy Recommendations":
     from utils.ai_helper_gemini import AIHealthcareAnalyst
     
     st.header("🤖 AI-Powered Policy Recommendations")
@@ -2035,7 +2035,7 @@ elif page == "🤖 AI Policy Recommendations":
                 st.info("Make sure GOOGLE_API_KEY is set in Streamlit Cloud secrets.")
 
 
-elif page == "📊 AI Report Generator":
+if page == "📊 AI Report Generator":
     from utils.ai_helper_gemini import AIHealthcareAnalyst
     
     st.header("📊 AI Report Generator")
@@ -2116,6 +2116,7 @@ elif page == "📊 AI Report Generator":
             except Exception as e:
                 st.error(f"❌ Error: {str(e)}")
                 st.info("Make sure GOOGLE_API_KEY is set in Streamlit Cloud secrets.")
+
 
 
 
