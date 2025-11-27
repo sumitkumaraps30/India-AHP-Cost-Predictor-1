@@ -10,7 +10,6 @@ import os
 import sys
 import google.generativeai as genai
 
-from utils.ai_helper import AIHealthcareAnalyst
 
 try:
     from openai import OpenAI
@@ -2116,6 +2115,7 @@ if page == "📊 AI Report Generator":
             except Exception as e:
                 st.error(f"❌ Error: {str(e)}")
                 st.info("Make sure GOOGLE_API_KEY is set in Streamlit Cloud secrets.")
+
 
 
 
