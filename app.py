@@ -8,6 +8,9 @@ import folium
 from streamlit_folium import st_folium
 import os
 import sys
+import google.generativeai as genai
+
+from utils.ai_helper import AIHealthcareAnalyst
 
 try:
     from openai import OpenAI
@@ -1950,3 +1953,4 @@ st.markdown("""
     <p style="margin: 0;">Built to support India's journey towards Universal Health Coverage by 2030</p>
 </div>
 """, unsafe_allow_html=True)
+
