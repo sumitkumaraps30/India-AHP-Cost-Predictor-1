@@ -1955,6 +1955,8 @@ st.markdown("""
     <p style="margin: 0;">Built to support India's journey towards Universal Health Coverage by 2030</p>
 </div>
 """, unsafe_allow_html=True)
+
+
 elif page == "🤖 AI Policy Recommendations":
     from utils.ai_helper_gemini import AIHealthcareAnalyst
     
@@ -2114,5 +2116,6 @@ elif page == "📊 AI Report Generator":
             except Exception as e:
                 st.error(f"❌ Error: {str(e)}")
                 st.info("Make sure GOOGLE_API_KEY is set in Streamlit Cloud secrets.")
+
 
 
